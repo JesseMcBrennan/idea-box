@@ -1,0 +1,111 @@
+body {
+  font-family: Open Sans, Sans-Serif;
+  font-size: 18px;
+}
+
+
+.input-form {
+  align-items: center;
+  background-color: #E5F3F2;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  justify-content: center;
+}
+
+h1,
+h3,
+.quality {
+  color: #6D6E71;
+  font-family: Roboto Slab, Serif;
+  font-size: 54px;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+
+span {
+  color: #00A79D;
+}
+
+.form {
+  border: .5px solid;
+  border-color: #6D6E71;
+  color: #696E71;
+  display: block;
+  font-size: 20px;
+  margin: 20px auto 0 auto;
+  min-width: 500px;
+  padding: 7.5px 0 7.5px 0;
+  text-indent: 10px;
+}
+
+input::placeholder {
+  color: #939598;
+  text-indent: 10px;
+}
+
+button {
+  background-color: #00A79D;
+  border: 0;
+  color: #FFFFFF;
+  font-size: 20px;
+  margin: 20px auto 0 auto;
+  padding: 5px 0 10px 0;
+  min-width: 500px;
+}
+
+button:hover {
+  background-color: #045E55;
+}
+
+/* User's Ideas */
+
+.idea-list {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+article {
+  border-bottom: .5px solid;
+  border-color: #D1D3D4;
+  margin-bottom: 20px;
+  min-width: 500px;
+}
+
+h3 {
+  color: #6D6E71;
+  font-size: 26px;
+  padding-bottom: 10px;
+}
+
+p {
+  color: #939598;
+}
+
+.delete-button {
+  float: right;
+  width: 30px;
+}
+
+.upvote-button,
+.downvote-button {
+  width: 30px;
+}
+
+
+.quality {
+  display: inline-block;
+  color: #6D6E71;
+  font-family: Roboto Slab, Serif;
+  font-size: 20px;
+}
+
+.rating {
+    color: #6D6E71;
+    font-family: Open Sans, Sans-Serif;
+    font-weight: 400
+
+}
