@@ -4,22 +4,22 @@
 // console.log(json)
 // getCard()
 
-var save = $('.save-button');
-var ideaNumber = 0
+var $save = $('.save-button');
 var cardArray = []
 
-save.click(storeIdea);
+// loadCards();
+$save.click(storeIdea);
 
 
 
 function storeIdea(event) {
   event.preventDefault();
-  var ideaTitle = $('#idea-title').val();
-  var ideaBody = $('#idea-body').val();
-  var ideaId = event.timeStamp;
-  var newCard = new CreateCard(ideaId, ideaTitle, ideaBody);
-  newCard.prependCard();
-  storeCard(ideaId, newCard);
+  var $ideaTitle = $('#idea-title').val();
+  var $ideaBody = $('#idea-body').val();
+  var $ideaId = event.timeStamp;
+  var newCard = new CreateCard($ideaId, $ideaTitle, $ideaBody);
+  $newCard.prependCard();
+  storeCard($ideaId, newCard);
 }
 
 function CreateCard(id, title, body) {
@@ -46,8 +46,22 @@ CreateCard.prototype.prependCard = function() {
 function storeCard(id, card) {
   var stringCard = JSON.stringify(card);
   localStorage.setItem(id, stringCard);
-  addToCardArray(stringCard)
 }
+
+// function loadCards() {
+
+//   for (var i = 0; i < localStorage.length; i++) {
+
+
+
+//     getCard("id", "card")
+//     prependCard("id", "title", "body")
+//     // for each, getCard() & parse if needed
+//    // prepend all to page
+//   }
+// }
+
+
 
 function getCard(id, card) {
   var retrievedCard = localStorage.getItem(id)
@@ -55,16 +69,11 @@ function getCard(id, card) {
   console.log('test')
 }
 
-function addToCardArray(card) {
-  cardArray.push(card)
-  console.log(cardArray)
-}
-
 $('#search').on('keyup', search);
 
-// function search() {
-//   var input = $('search').val()
-// }
+function search() {
+  var input = $('search').val()
+}
 
 
 $('main').on('click', 'article .delete-button', deleteIdea);
@@ -79,20 +88,20 @@ $('main').on('click', 'article .upvote-button', upvoteIdea);
 
 function upvoteIdea(event) {
   event.preventDefault();
-  var rating = $('.rating');
-  if (rating.text() === 'swill') {
-     rating.text('plausible');
-  } else if (rating.text() === 'plausible') 
-     rating.text('genius');
+  var $rating = $('.rating');
+  if ($(this).siblings('p').children($rating).text() === 'swill') {
+    $(this).siblings('p').children($rating).text('plausible');
+  } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
+    $(this).siblings('p').children($rating).text('genius');
 };
 
 $('main').on('click', 'article .downvote-button', downvoteIdea)
 
 function downvoteIdea(event) {
   event.preventDefault();
-  var rating = $('.rating');
-  if (rating.text() === 'genius') {
-    rating.text('plausible');
-  } else if (rating.text() === 'plausible') 
-    rating.text('swill');
+  var $rating = $('.rating');
+  if ($(this).siblings('p').children($rating).text() === 'genius') {
+    $(this).siblings('p').children($rating).text('plausible');
+  } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
+    $(this).siblings('p').children($rating).text('swill');
 };
