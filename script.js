@@ -7,7 +7,7 @@
 var $save = $('.save-button');
 var cardArray = []
 
-// loadCards();
+loadCards();
 $save.click(storeIdea);
 
 
@@ -18,7 +18,7 @@ function storeIdea(event) {
   var $ideaBody = $('#idea-body').val();
   var $ideaId = event.timeStamp;
   var newCard = new CreateCard($ideaId, $ideaTitle, $ideaBody);
-  newCard.prependCard();
+  prependCard(newCard.id,newCard.title,newCard.body);
   storeCard($ideaId, newCard);
 }
 
@@ -32,11 +32,11 @@ function CreateCard(id, title, body) {
 // 3. var parsedObject = JSON.parse(retrievedObject);
 // 4. parsedObject (We are now back to our original object!)
 
-CreateCard.prototype.prependCard = function() { 
-  $('.idea-list').prepend(`<article id="${this.id}">
-  <h3 contenteditable="true">${this.title}</h3>
+function prependCard(id, title, body) { 
+  $('.idea-list').prepend(`<article id="${id}">
+  <h3 contenteditable="true">${title}</h3>
   <input type="button" aria-label="delete" class="delete-button" alt="delete">
-  <p contenteditable="true">${this.body}</p>
+  <p contenteditable="true">${body}</p>
   <input type="button" aria-label="upvote" class="upvote-button" alt="upvote">
   <input type="button" aria-label="downvote" class="downvote-button" alt="downvote">
   <p class="quality">quality:
@@ -52,13 +52,20 @@ function storeCard(id, card) {
   localStorage.setItem(id, stringCard);
 }
 
-// function loadCards() {
+function loadCards() {
 
-for (var i = 0; i < localStorage.length; i++) { 
-  var localStorageid = localStorage.key(i)
-  var retrievedCard = localStorage.getItem(localStorageid);
-  var parsedCard = JSON.parse(retrievedCard);
-  prependCard(parsedCard.id, parsedCard.title, parsedCard.body);
+// localStorage.map(function(card) { 
+
+// });
+
+
+  for (var i = 0; i < localStorage.length; i++) { 
+    var localStorageid = localStorage.key(i)
+    var retrievedCard = localStorage.getItem(localStorageid);
+    var parsedCard = JSON.parse(retrievedCard);
+    console.log(parsedCard);
+    prependCard(parsedCard.id, parsedCard.title, parsedCard.body);
+  }
 }
 
 
