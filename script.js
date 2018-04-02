@@ -27,6 +27,10 @@ function CreateCard(id, title, body) {
   this.title = title;
   this.body = body;
 }
+// 1. var retrievedObject = localStorage.getItem('somethingComplicated');
+// 2. retrievedObject (Notice this is still the stringified version of our object - we need it to be a real object again, not a string)
+// 3. var parsedObject = JSON.parse(retrievedObject);
+// 4. parsedObject (We are now back to our original object!)
 
 CreateCard.prototype.prependCard = function() { 
   $('.idea-list').prepend(`<article id="${this.id}">
@@ -50,18 +54,19 @@ function storeCard(id, card) {
 
 // function loadCards() {
 
-//   for (var i = 0; i < localStorage.length; i++) {
+for (var i = 0; i < localStorage.length; i++) { 
+  var localStorageid = localStorage.key(i)
+  var retrievedCard = localStorage.getItem(localStorageid);
+  var parsedCard = JSON.parse(retrievedCard);
+  prependCard(parsedCard.id, parsedCard.title, parsedCard.body);
+}
 
 
-
-//     getCard("id", "card")
-//     prependCard("id", "title", "body")
-//     // for each, getCard() & parse if needed
-//    // prepend all to page
-//   }
-// }
-
-
+  //   getCard("id", "card")
+  //   prependCard("id", "title", "body")
+  //   for each, getCard() & parse if needed
+  //  prepend all to page
+  // }
 
 function getCard(id, card) {
   var retrievedCard = localStorage.getItem(id)
