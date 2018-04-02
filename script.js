@@ -18,7 +18,7 @@ function storeIdea(event) {
   var $ideaBody = $('#idea-body').val();
   var $ideaId = event.timeStamp;
   var newCard = new CreateCard($ideaId, $ideaTitle, $ideaBody);
-  $newCard.prependCard();
+  newCard.prependCard();
   storeCard($ideaId, newCard);
 }
 
