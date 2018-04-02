@@ -47,18 +47,8 @@ function prependCard(id, title, body) {
   $('#idea-title , #idea-body').val('');
 }
 
-function storeCard(id, card) {
-  var stringCard = JSON.stringify(card);
-  localStorage.setItem(id, stringCard);
-}
 
 function loadCards() {
-
-// localStorage.map(function(card) { 
-
-// });
-
-
   for (var i = 0; i < localStorage.length; i++) { 
     var localStorageid = localStorage.key(i)
     var retrievedCard = localStorage.getItem(localStorageid);
@@ -68,17 +58,14 @@ function loadCards() {
   }
 }
 
+function getCard(id) {
+  var retrievedCard = localStorage.getItem(id);
+  JSON.parse(retrievedCard);
+}
 
-  //   getCard("id", "card")
-  //   prependCard("id", "title", "body")
-  //   for each, getCard() & parse if needed
-  //  prepend all to page
-  // }
-
-function getCard(id, card) {
-  var retrievedCard = localStorage.getItem(id)
-  JSON.parse(card);
-  console.log('test')
+function storeCard(id) {
+  var stringCard = JSON.stringify(id);
+  localStorage.setItem(id, stringCard);
 }
 
 $('#search').on('keyup', search);
@@ -92,28 +79,32 @@ $('main').on('click', 'article .delete-button', deleteIdea);
 
 function deleteIdea(event) {
   event.preventDefault();
-  localStorage.removeItem(this.id)
-  $(this).parent('article').remove()
+  localStorage.removeItem($(this).parent('article').attr('id'));
+  $(this).parent('article').remove() 
 };
 
 $('main').on('click', 'article .upvote-button', upvoteIdea); 
 
 function upvoteIdea(event) {
   event.preventDefault();
+  // getCard($(this).parent('article ').attr('id'));
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'swill') {
     $(this).siblings('p').children($rating).text('plausible');
   } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
     $(this).siblings('p').children($rating).text('genius');
+    storeCard($(this).parent('article').attr('id'));
 };
 
 $('main').on('click', 'article .downvote-button', downvoteIdea)
 
 function downvoteIdea(event) {
   event.preventDefault();
+  getCard($(this).parent('article').attr('id'));
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'genius') {
     $(this).siblings('p').children($rating).text('plausible');
   } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
     $(this).siblings('p').children($rating).text('swill');
+    storeCard($(this).parent('article').attr('id'));
 };
