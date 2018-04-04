@@ -150,10 +150,11 @@ p {
 
 @media screen and (max-width: 450px) {
 
-
+h1 {
+  font-size: 3em;
+}
 
 .input-form {
-  display: block;
   align-items: center;
   min-width: 80%;
   height: 400px;
@@ -163,6 +164,7 @@ p {
   font-size: 20px;
   min-width: 80%;
 }
+
 #idea-body { 
   height: 80px;
 }
@@ -172,7 +174,7 @@ p {
 }
 
 button {
-  min-width: 80%;
+  min-width: 100%;
 }
 
 article {

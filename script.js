@@ -24,7 +24,7 @@ function CreateCard(id, title, body, quality) {
 }
 
 function prependCard(id, title, body, quality) { 
-  $('.idea-list').prepend(`<article id="${id}">
+  $('.idea-list').prepend(`<article id="${id}" aria-atomic>
   <h3 class="title content" contenteditable="true">${title}</h3>
   <input type="button" aria-label="delete" class="delete-button" alt="delete">
   <p class="body content" contenteditable="true">${body}</p>
@@ -50,11 +50,11 @@ function loadCards() {
 $('#search').on('keyup', search);
 
 function search() {
-  var input = $('#search').val()
-  var cards = $('article  .content')
-  debugger
+  var input = $('#search').val();
+  var cards = $('article')
+  console.log(cards);
   var results = cards.filter(function(card) {
-    return card;
+    return card.toLowerCase().indexOf(input.toLowerCase()) -1;
   });
 }
 
