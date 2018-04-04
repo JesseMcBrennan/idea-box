@@ -10,6 +10,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 400px;
+  padding-right: 1em;
+  padding-left: 1em;
   justify-content: center;
 }
 
@@ -148,34 +150,36 @@ p {
 
 }
 
-@media screen and (max-width: 450px) {
 
-h1 {
-  font-size: 3em;
-}
+@media screen and (max-width: 535px) {
 
 .input-form {
-  align-items: center;
-  min-width: 80%;
-  height: 400px;
-  }
+  height: 330px;
+  min-width: 360px;
+  padding-bottom: 20px;
+}
+
 
 .form {
-  font-size: 20px;
-  min-width: 80%;
+  /*margin: 20px auto 0 auto;*/
+  min-width: 360px;
 }
 
-#idea-body { 
-  height: 80px;
-}
-.search { 
-  min-width: 80%;
-  
-}
 
 button {
   min-width: 100%;
 }
+
+
+#idea-body { 
+  height: 80px;
+}
+
+
+h1 {
+  font-size: 2em;
+}
+
 
 article {
   min-width: 80%;

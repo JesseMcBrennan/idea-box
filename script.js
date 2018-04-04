@@ -24,7 +24,7 @@ function CreateCard(id, title, body, quality) {
 }
 
 function prependCard(id, title, body, quality) { 
-  $('.idea-list').prepend(`<article id="${id}" aria-atomic>
+  $('.idea-list').prepend(`<article id="${id}" class="idea-card" aria-atomic>
   <h3 class="title content" contenteditable="true">${title}</h3>
   <input type="button" aria-label="delete" class="delete-button" alt="delete">
   <p class="body content" contenteditable="true">${body}</p>
@@ -50,12 +50,10 @@ function loadCards() {
 $('#search').on('keyup', search);
 
 function search() {
-  var input = $('#search').val();
-  var cards = $('article')
-  console.log(cards);
-  var results = cards.filter(function(card) {
-    return card.toLowerCase().indexOf(input.toLowerCase()) -1;
-  });
+  var $input = $('#search').val();
+  var $cards = $('article .content')
+  $("article .content:contains('" + $input + "')").parent().show();
+  $("article .content:not(:contains('" + $input + "'))").parent().hide();  
 }
 
 $('main').on('click', 'article .delete-button', deleteIdea);
@@ -67,6 +65,12 @@ function deleteIdea(event) {
 };
 
 $('main').on('blur', 'article .content', editContent); 
+$('main').on('keypress', 'article .content', function(event){
+    if (event.keycode === 13) {
+      event.preventDefault();
+      editContent();
+    }
+}); 
 
 function editContent() {
   var $id = $(this).parent('article').attr('id')
