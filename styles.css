@@ -147,3 +147,11 @@ p {
     font-weight: 400
 
 }
+
+@media screen and (max-width: 450px) {
+
+  .input-form {
+  align-items: center;
+  height: 400px;
+  }
+}
