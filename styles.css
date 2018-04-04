@@ -10,6 +10,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 400px;
+  padding-right: 1em;
+  padding-left: 1em;
   justify-content: center;
 }
 
@@ -146,4 +148,41 @@ p {
     font-family: Open Sans, Sans-Serif;
     font-weight: 400
 
-} 
+}
+
+
+@media screen and (max-width: 535px) {
+
+.input-form {
+  height: 330px;
+  min-width: 360px;
+  padding-bottom: 20px;
+}
+
+
+.form {
+  /*margin: 20px auto 0 auto;*/
+  min-width: 360px;
+}
+
+
+button {
+  min-width: 100%;
+}
+
+
+#idea-body { 
+  height: 80px;
+}
+
+
+h1 {
+  font-size: 2em;
+}
+
+
+article {
+  min-width: 80%;
+}
+
+}

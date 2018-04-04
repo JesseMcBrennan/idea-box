@@ -1,79 +1,58 @@
-// var objectToStore = JSON.stringify('.idea-list');
-// var json = '{"ideaTitle":true, "count":25}';
-// obj = JSON.parse(json);
-// console.log(json)
-// getCard()
-
-var $save = $('.save-button');
-var cardArray = []
-
 loadCards();
-$save.click(storeIdea);
 
-
+$('.save-button')on('click', storeIdea);
 
 function storeIdea(event) {
   event.preventDefault();
   var $ideaTitle = $('#idea-title').val();
   var $ideaBody = $('#idea-body').val();
   var $ideaId = event.timeStamp;
-  var newCard = new CreateCard($ideaId, $ideaTitle, $ideaBody);
-  prependCard(newCard.id,newCard.title,newCard.body);
+  var $quality = 'swill'
+  var newCard = new CreateCard($ideaId, $ideaTitle, $ideaBody, $quality);
+  prependCard(newCard.id, newCard.title, newCard.body, newCard.quality);
   storeCard($ideaId, newCard);
 }
 
-function CreateCard(id, title, body) {
+function CreateCard(id, title, body, quality) {
   this.id = id;
   this.title = title;
   this.body = body;
+  this.quality = quality;
 }
-// 1. var retrievedObject = localStorage.getItem('somethingComplicated');
-// 2. retrievedObject (Notice this is still the stringified version of our object - we need it to be a real object again, not a string)
-// 3. var parsedObject = JSON.parse(retrievedObject);
-// 4. parsedObject (We are now back to our original object!)
 
-function prependCard(id, title, body) { 
-  $('.idea-list').prepend(`<article id="${id}">
-  <h3 contenteditable="true">${title}</h3>
+
+function prependCard(id, title, body, quality) { 
+  $('.idea-list').prepend(`<article id="${id}" class="idea-card" aria-atomic>
+  <h3 class="title content" contenteditable="true">${title}</h3>
   <input type="button" aria-label="delete" class="delete-button" alt="delete">
-  <p contenteditable="true">${body}</p>
+  <p class="body content" contenteditable="true">${body}</p>
   <input type="button" aria-label="upvote" class="upvote-button" alt="upvote">
   <input type="button" aria-label="downvote" class="downvote-button" alt="downvote">
   <p class="quality">quality:
-  <span class="rating">swill</span>
+  <span class="rating">${quality}</span>
   </p>      
   </article>`);
   $('#search').removeClass('search');
   $('#idea-title , #idea-body').val('');
 }
 
-
 function loadCards() {
   for (var i = 0; i < localStorage.length; i++) { 
     var localStorageid = localStorage.key(i)
     var retrievedCard = localStorage.getItem(localStorageid);
     var parsedCard = JSON.parse(retrievedCard);
-    console.log(parsedCard);
-    prependCard(parsedCard.id, parsedCard.title, parsedCard.body);
-  }
-}
-
-function getCard(id) {
-  var retrievedCard = localStorage.getItem(id);
-  JSON.parse(retrievedCard);
-}
-
-function storeCard(id) {
-  var stringCard = JSON.stringify(id);
-  localStorage.setItem(id, stringCard);
+    prependCard(parsedCard.id, parsedCard.title, parsedCard.body, parsedCard.quality);
+  };
 }
 
 $('#search').on('keyup', search);
 
 function search() {
-  var input = $('search').val()
+  var $input = $('#search').val();
+  var $cards = $('article .content')
+  $("article .content:contains('" + $input + "')").parent().show();
+  $("article .content:not(:contains('" + $input + "'))").parent().hide();  
 }
-
 
 $('main').on('click', 'article .delete-button', deleteIdea);
 
@@ -83,28 +62,63 @@ function deleteIdea(event) {
   $(this).parent('article').remove() 
 };
 
+$('main').on('blur', 'article .content', editContent); 
+$('main').on('keypress', 'article .content', function(event){
+    if (event.keyCode === 13) {
+      $(this).blur();
+    }
+}); 
+
+function editContent() {
+  var $id = $(this).parent('article').attr('id')
+  var parsedCard = getCard($id)
+  console.log($(this).parent('article').children('.title').val())
+  parsedCard.title = $(this).parent('article').children('.title').text();
+  parsedCard.body = $(this).parent('article').children('.body').text();
+  storeCard($id, parsedCard)
+}
+
 $('main').on('click', 'article .upvote-button', upvoteIdea); 
 
 function upvoteIdea(event) {
   event.preventDefault();
-  // getCard($(this).parent('article ').attr('id'));
+
+  var $id = $(this).parent('article').attr('id');
+  var parsedCard = getCard($id)
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'swill') {
-    $(this).siblings('p').children($rating).text('plausible');
-  } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
-    $(this).siblings('p').children($rating).text('genius');
-    storeCard($(this).parent('article').attr('id'));
+    $(this).siblings('p').children($rating).text('plausible')
+    parsedCard.quality = 'plausible';
+    return storeCard($id, parsedCard)
+  } else if ($(this).siblings('p').children($rating).text() === 'plausible') {
+    $(this).siblings('p').children($rating).text('genius')
+    parsedCard.quality = 'genius'; 
+  } storeCard($id, parsedCard)
 };
 
 $('main').on('click', 'article .downvote-button', downvoteIdea)
 
 function downvoteIdea(event) {
   event.preventDefault();
-  getCard($(this).parent('article').attr('id'));
+  var $id = $(this).parent('article').attr('id');
+  var parsedCard = getCard($id)  
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'genius') {
     $(this).siblings('p').children($rating).text('plausible');
-  } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
+    parsedCard.quality = 'plausible';
+    return storeCard($id, parsedCard)
+  } else if ($(this).siblings('p').children($rating).text() === 'plausible') {
     $(this).siblings('p').children($rating).text('swill');
-    storeCard($(this).parent('article').attr('id'));
+    parsedCard.quality = 'swill';  
+  } storeCard($id, parsedCard)
 };
+
+function getCard(id) {
+  var retrievedCard = localStorage.getItem(id);
+  return JSON.parse(retrievedCard);
+}
+
+function storeCard(id, card) {
+  var stringCard = JSON.stringify(card);
+  localStorage.setItem(id, stringCard);
+}
