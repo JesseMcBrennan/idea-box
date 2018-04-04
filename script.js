@@ -1,4 +1,3 @@
-
 loadCards();
 
 $('.save-button')on('click', storeIdea);
@@ -20,6 +19,7 @@ function CreateCard(id, title, body, quality) {
   this.body = body;
   this.quality = quality;
 }
+
 
 function prependCard(id, title, body, quality) { 
   $('.idea-list').prepend(`<article id="${id}" class="idea-card" aria-atomic>
@@ -82,6 +82,7 @@ $('main').on('click', 'article .upvote-button', upvoteIdea);
 
 function upvoteIdea(event) {
   event.preventDefault();
+
   var $id = $(this).parent('article').attr('id');
   var parsedCard = getCard($id)
   var $rating = $('.rating');
