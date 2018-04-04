@@ -1,9 +1,7 @@
 
-var $save = $('.save-button');
-
 loadCards();
 
-$save.click(storeIdea);
+$('.save-button')on('click', storeIdea);
 
 function storeIdea(event) {
   event.preventDefault();
@@ -66,9 +64,8 @@ function deleteIdea(event) {
 
 $('main').on('blur', 'article .content', editContent); 
 $('main').on('keypress', 'article .content', function(event){
-    if (event.keycode === 13) {
-      event.preventDefault();
-      editContent();
+    if (event.keyCode === 13) {
+      $(this).blur();
     }
 }); 
 
