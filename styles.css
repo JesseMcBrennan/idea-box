@@ -150,8 +150,33 @@ p {
 
 @media screen and (max-width: 450px) {
 
-  .input-form {
+
+
+.input-form {
+  display: block;
   align-items: center;
+  min-width: 80%;
   height: 400px;
   }
+
+.form {
+  font-size: 20px;
+  min-width: 80%;
+}
+#idea-body { 
+  height: 80px;
+}
+.search { 
+  min-width: 80%;
+  
+}
+
+button {
+  min-width: 80%;
+}
+
+article {
+  min-width: 80%;
+}
+
 }

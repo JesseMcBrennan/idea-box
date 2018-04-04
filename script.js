@@ -2,8 +2,8 @@
 var $save = $('.save-button');
 
 loadCards();
-$save.click(storeIdea);
 
+$save.click(storeIdea);
 
 function storeIdea(event) {
   event.preventDefault();
@@ -47,20 +47,15 @@ function loadCards() {
   };
 }
 
-function getCard(id) {
-  var retrievedCard = localStorage.getItem(id);
-  var parsedCard = JSON.parse(retrievedCard);
-}
-
-function storeCard(id, card) {
-  var stringCard = JSON.stringify(card);
-  localStorage.setItem(id, stringCard);
-}
-
 $('#search').on('keyup', search);
 
 function search() {
-  var input = $('search').val()
+  var input = $('#search').val()
+  var cards = $('article  .content')
+  debugger
+  var results = cards.filter(function(card) {
+    return card;
+  });
 }
 
 $('main').on('click', 'article .delete-button', deleteIdea);
@@ -71,13 +66,11 @@ function deleteIdea(event) {
   $(this).parent('article').remove() 
 };
 
-
 $('main').on('blur', 'article .content', editContent); 
 
 function editContent() {
   var $id = $(this).parent('article').attr('id')
-  var retrievedCard = localStorage.getItem($id);
-  var parsedCard = JSON.parse(retrievedCard);
+  var parsedCard = getCard($id)
   console.log($(this).parent('article').children('.title').val())
   parsedCard.title = $(this).parent('article').children('.title').text();
   parsedCard.body = $(this).parent('article').children('.body').text();
@@ -89,17 +82,16 @@ $('main').on('click', 'article .upvote-button', upvoteIdea);
 function upvoteIdea(event) {
   event.preventDefault();
   var $id = $(this).parent('article').attr('id');
-  var retrievedCard = localStorage.getItem($id);
-  var parsedCard = JSON.parse(retrievedCard);
+  var parsedCard = getCard($id)
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'swill') {
     $(this).siblings('p').children($rating).text('plausible')
     parsedCard.quality = 'plausible';
     return storeCard($id, parsedCard)
-  } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
+  } else if ($(this).siblings('p').children($rating).text() === 'plausible') {
     $(this).siblings('p').children($rating).text('genius')
     parsedCard.quality = 'genius'; 
-    storeCard($id, parsedCard)
+  } storeCard($id, parsedCard)
 };
 
 $('main').on('click', 'article .downvote-button', downvoteIdea)
@@ -107,15 +99,24 @@ $('main').on('click', 'article .downvote-button', downvoteIdea)
 function downvoteIdea(event) {
   event.preventDefault();
   var $id = $(this).parent('article').attr('id');
-  var retrievedCard = localStorage.getItem($id);
-  var parsedCard = JSON.parse(retrievedCard);
+  var parsedCard = getCard($id)  
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'genius') {
     $(this).siblings('p').children($rating).text('plausible');
     parsedCard.quality = 'plausible';
     return storeCard($id, parsedCard)
-  } else if ($(this).siblings('p').children($rating).text() === 'plausible') 
+  } else if ($(this).siblings('p').children($rating).text() === 'plausible') {
     $(this).siblings('p').children($rating).text('swill');
     parsedCard.quality = 'swill';  
-    storeCard($id, parsedCard)
+  } storeCard($id, parsedCard)
 };
+
+function getCard(id) {
+  var retrievedCard = localStorage.getItem(id);
+  return JSON.parse(retrievedCard);
+}
+
+function storeCard(id, card) {
+  var stringCard = JSON.stringify(card);
+  localStorage.setItem(id, stringCard);
+}
