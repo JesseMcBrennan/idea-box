@@ -1,6 +1,6 @@
 loadCards();
 
-$('.save-button')on('click', storeIdea);
+$('.save-button').on('click', storeIdea);
 
 function storeIdea(event) {
   event.preventDefault();
