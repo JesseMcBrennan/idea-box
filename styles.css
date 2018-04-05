@@ -170,10 +170,6 @@ button {
 }
 
 
-#idea-body { 
-  height: 80px;
-}
-
 #idea-body::placeholder { 
   padding-top: 0px;
 }

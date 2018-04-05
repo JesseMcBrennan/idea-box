@@ -131,8 +131,7 @@ function checkSize() {
     $('#idea-body').replaceWith('<textarea type="text" class="form"' + 
       'name="body" aria-label="Enter Idea Body" id="idea-body"' +
       'placeholder="Body" for="button"></textarea>');
-    $('#idea-body').attr('rows', '5');
-    $('#idea-body').attr('cols', '30');
+    $('#idea-body').attr('rows', '3');
   } else  
     $('#idea-body').replaceWith('<input type="text" class="form"' +
       'name="body" aria-label="Enter Idea Body" id="idea-body"' + 
