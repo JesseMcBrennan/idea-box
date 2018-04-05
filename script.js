@@ -51,7 +51,7 @@ $('#search').on('keyup', search);
 
 function search() {
   var $input = $('#search').val();
-  var $cards = $('article .content')
+  var $cards = $('article .content');
   $("article .content:contains('" + $input + "')").parent().show();
   $("article .content:not(:contains('" + $input + "'))").parent().hide();  
 }
