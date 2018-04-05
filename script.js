@@ -1,6 +1,9 @@
 loadCards();
+checkSize();
 
-$('.save-button')on('click', storeIdea);
+$('.save-button').on('click', storeIdea);
+
+$(window).resize(checkSize);
 
 function storeIdea(event) {
   event.preventDefault();
@@ -20,7 +23,6 @@ function CreateCard(id, title, body, quality) {
   this.quality = quality;
 }
 
-
 function prependCard(id, title, body, quality) { 
   $('.idea-list').prepend(`<article id="${id}" class="idea-card" aria-atomic>
   <h3 class="title content" contenteditable="true">${title}</h3>
@@ -38,8 +40,8 @@ function prependCard(id, title, body, quality) {
 
 function loadCards() {
   for (var i = 0; i < localStorage.length; i++) { 
-    var localStorageid = localStorage.key(i)
-    var retrievedCard = localStorage.getItem(localStorageid);
+    var localStorageId = localStorage.key(i)
+    var retrievedCard = localStorage.getItem(localStorageId);
     var parsedCard = JSON.parse(retrievedCard);
     prependCard(parsedCard.id, parsedCard.title, parsedCard.body, parsedCard.quality);
   };
@@ -59,23 +61,24 @@ $('main').on('click', 'article .delete-button', deleteIdea);
 function deleteIdea(event) {
   event.preventDefault();
   localStorage.removeItem($(this).parent('article').attr('id'));
-  $(this).parent('article').remove() 
+  $(this).parent('article').remove();
 };
 
 $('main').on('blur', 'article .content', editContent); 
-$('main').on('keypress', 'article .content', function(event){
-    if (event.keyCode === 13) {
-      $(this).blur();
-    }
-}); 
+$('main').on('keypress', 'article .content',exitEditor);
+
+function exitEditor(event){
+  if (event.keyCode === 13) {
+    $(this).blur();
+  };
+}
 
 function editContent() {
   var $id = $(this).parent('article').attr('id')
   var parsedCard = getCard($id)
-  console.log($(this).parent('article').children('.title').val())
   parsedCard.title = $(this).parent('article').children('.title').text();
   parsedCard.body = $(this).parent('article').children('.body').text();
-  storeCard($id, parsedCard)
+  storeCard($id, parsedCard);
 }
 
 $('main').on('click', 'article .upvote-button', upvoteIdea); 
@@ -89,11 +92,11 @@ function upvoteIdea(event) {
   if ($(this).siblings('p').children($rating).text() === 'swill') {
     $(this).siblings('p').children($rating).text('plausible')
     parsedCard.quality = 'plausible';
-    return storeCard($id, parsedCard)
+    return storeCard($id, parsedCard);
   } else if ($(this).siblings('p').children($rating).text() === 'plausible') {
-    $(this).siblings('p').children($rating).text('genius')
+    $(this).siblings('p').children($rating).text('genius');
     parsedCard.quality = 'genius'; 
-  } storeCard($id, parsedCard)
+  } storeCard($id, parsedCard);
 };
 
 $('main').on('click', 'article .downvote-button', downvoteIdea)
@@ -122,3 +125,18 @@ function storeCard(id, card) {
   var stringCard = JSON.stringify(card);
   localStorage.setItem(id, stringCard);
 }
+
+function checkSize() {
+  if($(window).width() <= 650) {
+    $('#idea-body').replaceWith('<textarea type="text" class="form"' + 
+      'name="body" aria-label="Enter Idea Body" id="idea-body"' +
+      'placeholder="Body" for="button"></textarea>');
+    $('#idea-body').attr('rows', '5');
+    $('#idea-body').attr('cols', '30');
+  } else  
+    $('#idea-body').replaceWith('<input type="text" class="form"' +
+      'name="body" aria-label="Enter Idea Body" id="idea-body"' + 
+      'placeholder="Body" for="button">');  
+}
+
+
