@@ -165,29 +165,22 @@ p {
   padding-top: 5px;
 }
 
-button {
-  min-width: 100%;
-}
-
-
-#idea-body::placeholder { 
-  padding-top: 0px;
-}
-
-
 h1 {
   font-size: 2em;
 }
-
-
-article {
-  min-width: 70%;
-} 
 
 input::placeholder {
   color: #939598;
   text-indent: 10px;
 }
+
+button {
+  min-width: 100%;
+}
+
+article {
+  min-width: 70%;
+} 
 
 }
 
