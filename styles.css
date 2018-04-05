@@ -3,7 +3,6 @@ body {
   font-size: 18px;
 }
 
-
 .input-form {
   align-items: center;
   background-color: #E5F3F2;
@@ -31,7 +30,7 @@ span {
 
 .form {
   border: .5px solid;
-  border-color: #6D6E71;
+  border-color: #ACACAC;
   color: #696E71;
   display: block;
   font-size: 20px;
@@ -53,7 +52,7 @@ button {
   font-size: 20px;
   margin: 20px auto 0 auto;
   padding: 5px 0 10px 0;
-  min-width: 500px;
+  min-width: 100%;
 }
 
 button:hover {
@@ -147,24 +146,24 @@ p {
     color: #6D6E71;
     font-family: Open Sans, Sans-Serif;
     font-weight: 400
-
 }
 
 
-@media screen and (max-width: 535px) {
+@media screen and (max-width: 650px) {
 
 .input-form {
   height: 330px;
   min-width: 360px;
   padding-bottom: 20px;
 }
-
-
+  
 .form {
-  /*margin: 20px auto 0 auto;*/
   min-width: 360px;
 }
 
+#idea-title { 
+  padding-top: 5px;
+}
 
 button {
   min-width: 100%;
@@ -175,6 +174,10 @@ button {
   height: 80px;
 }
 
+#idea-body::placeholder { 
+  padding-top: 0px;
+}
+
 
 h1 {
   font-size: 2em;
@@ -182,7 +185,26 @@ h1 {
 
 
 article {
+  min-width: 70%;
+} 
+
+input::placeholder {
+  color: #939598;
+  text-indent: 10px;
+}
+
+}
+
+@media screen and (max-width: 400px) {
+
+.input-form {
+  height: 330px;
   min-width: 80%;
+  padding: 0;
+}
+  
+.form {
+  min-width: 275px;
 }
 
 }

@@ -10,7 +10,7 @@ function storeIdea(event) {
   var $ideaTitle = $('#idea-title').val();
   var $ideaBody = $('#idea-body').val();
   var $ideaId = event.timeStamp;
-  var $quality = 'swill'
+  var $quality = 'swill';
   var newCard = new CreateCard($ideaId, $ideaTitle, $ideaBody, $quality);
   prependCard(newCard.id, newCard.title, newCard.body, newCard.quality);
   storeCard($ideaId, newCard);
@@ -40,7 +40,7 @@ function prependCard(id, title, body, quality) {
 
 function loadCards() {
   for (var i = 0; i < localStorage.length; i++) { 
-    var localStorageId = localStorage.key(i)
+    var localStorageId = localStorage.key(i);
     var retrievedCard = localStorage.getItem(localStorageId);
     var parsedCard = JSON.parse(retrievedCard);
     prependCard(parsedCard.id, parsedCard.title, parsedCard.body, parsedCard.quality);
@@ -75,7 +75,7 @@ function exitEditor(event){
 
 function editContent() {
   var $id = $(this).parent('article').attr('id')
-  var parsedCard = getCard($id)
+  var parsedCard = getCard($id);
   parsedCard.title = $(this).parent('article').children('.title').text();
   parsedCard.body = $(this).parent('article').children('.body').text();
   storeCard($id, parsedCard);
@@ -87,7 +87,7 @@ function upvoteIdea(event) {
   event.preventDefault();
 
   var $id = $(this).parent('article').attr('id');
-  var parsedCard = getCard($id)
+  var parsedCard = getCard($id);
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'swill') {
     $(this).siblings('p').children($rating).text('plausible')
@@ -99,21 +99,21 @@ function upvoteIdea(event) {
   } storeCard($id, parsedCard);
 };
 
-$('main').on('click', 'article .downvote-button', downvoteIdea)
+$('main').on('click', 'article .downvote-button', downvoteIdea);
 
 function downvoteIdea(event) {
   event.preventDefault();
   var $id = $(this).parent('article').attr('id');
-  var parsedCard = getCard($id)  
+  var parsedCard = getCard($id);  
   var $rating = $('.rating');
   if ($(this).siblings('p').children($rating).text() === 'genius') {
     $(this).siblings('p').children($rating).text('plausible');
     parsedCard.quality = 'plausible';
-    return storeCard($id, parsedCard)
+    return storeCard($id, parsedCard);
   } else if ($(this).siblings('p').children($rating).text() === 'plausible') {
     $(this).siblings('p').children($rating).text('swill');
     parsedCard.quality = 'swill';  
-  } storeCard($id, parsedCard)
+  } storeCard($id, parsedCard);
 };
 
 function getCard(id) {
